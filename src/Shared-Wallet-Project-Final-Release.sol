@@ -4,9 +4,8 @@ pragma solidity ^0.8.0;
 
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
 
-contract SharedWallet is Ownable
+contract Allowance is Ownable
 {
-
     mapping(address=>uint) public allowance;
 
     function setAllowance(address _who, uint _amount) public onlyOwner
@@ -20,14 +19,18 @@ contract SharedWallet is Ownable
         _;
     }
 
-    fallback () external payable
-    {
-
-    }
-
     function reduceAllowance(address _who, uint _amount) internal
     {
         allowance[_who] -= _amount;
+    }
+}
+
+contract SharedWallet is Allowance
+{
+
+    fallback () external payable
+    {
+
     }
 
     function Withdraw(address payable _to, uint _amount) public OwnerORAllowed(_amount)
