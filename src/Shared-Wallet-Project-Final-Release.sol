@@ -32,9 +32,12 @@ contract Allowance is Ownable
 contract SharedWallet is Allowance
 {
 
+    event MoneySent(address indexed _beneficiary, uint _amount);
+    event MoneyReceived(address indexed _from, uint _amount);
+
     fallback () external payable
     {
-
+        emit MoneyReceived(msg.sender, msg.value);
     }
 
     function Withdraw(address payable _to, uint _amount) public OwnerORAllowed(_amount)
@@ -45,6 +48,7 @@ contract SharedWallet is Allowance
             reduceAllowance(msg.sender, _amount);
         }
         _to.transfer(_amount);
+        emit MoneySent(_to, _amount);
     } 
 
 }
