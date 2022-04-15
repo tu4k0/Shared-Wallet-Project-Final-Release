@@ -1,22 +1,11 @@
-pragma solidity ^0.5.13;
+pragma solidity ^0.8.0;
 
-contract SharedWallet
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
+
+contract SharedWallet is Ownable
 {
 
-    address public owner;
-
-    modifier onlyOwner() 
-    {
-        require(msg.sender == owner, "You are not allowed");
-        _;
-    }
-
-    constructor() public
-    {
-        owner = msg.sender;
-    }
-
-    function () external payable
+    fallback () external payable
     {
 
     }
@@ -25,4 +14,5 @@ contract SharedWallet
     {
         _to.transfer(_amount);
     } 
+    
 }
