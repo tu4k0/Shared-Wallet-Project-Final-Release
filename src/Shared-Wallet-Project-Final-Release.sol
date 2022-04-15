@@ -6,7 +6,6 @@ import "./Allowance.sol";
 
 contract SharedWallet is Allowance
 {
-
     event MoneySent(address indexed _beneficiary, uint _amount);
     event MoneyReceived(address indexed _from, uint _amount);
 
@@ -30,5 +29,4 @@ contract SharedWallet is Allowance
         _to.transfer(_amount);
         emit MoneySent(_to, _amount);
     } 
-
 }
