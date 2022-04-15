@@ -32,6 +32,7 @@ contract SharedWallet is Ownable
 
     function Withdraw(address payable _to, uint _amount) public OwnerORAllowed(_amount)
     {
+        require(address(this).balance >= _amount, "Not enough balance in the smart contract");
         if(owner()!=msg.sender)
         {
             reduceAllowance(msg.sender, _amount);
