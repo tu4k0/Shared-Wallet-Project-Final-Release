@@ -17,6 +17,7 @@ contract SharedWallet
 
     function Withdraw(address payable _to, uint _amount) public
     {
+        require(msg.sender == owner, "You are not allowed");
         _to.transfer(_amount);
     } 
 }
