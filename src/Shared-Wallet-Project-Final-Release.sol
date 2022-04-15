@@ -43,6 +43,11 @@ contract SharedWallet is Allowance
         emit MoneyReceived(msg.sender, msg.value);
     }
 
+    function RenounceOwnership() public onlyOwner
+    {
+        revert("Can`t renounce ownership");
+    }
+
     function Withdraw(address payable _to, uint _amount) public OwnerORAllowed(_amount)
     {
         require(address(this).balance >= _amount, "Not enough balance in the smart contract");
