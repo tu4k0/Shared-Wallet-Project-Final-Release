@@ -16,7 +16,7 @@ contract SharedWallet is Ownable
 
     modifier OwnerORAllowed(uint _amount)
     {
-        require(owner() == msg.sender || allowance[msg.sender] > _amount, "You are not allowed");
+        require(owner() == msg.sender || allowance[msg.sender] >= _amount, "You are not allowed");
         _;
     }
 
@@ -25,8 +25,17 @@ contract SharedWallet is Ownable
 
     }
 
+    function reduceAllowance(address _who, uint _amount) internal
+    {
+        allowance[_who] -= _amount;
+    }
+
     function Withdraw(address payable _to, uint _amount) public OwnerORAllowed(_amount)
     {
+        if(owner()!=msg.sender)
+        {
+            reduceAllowance(msg.sender, _amount);
+        }
         _to.transfer(_amount);
     } 
 
