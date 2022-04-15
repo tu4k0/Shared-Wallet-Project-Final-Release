@@ -5,6 +5,12 @@ contract SharedWallet
 
     address public owner;
 
+    modifier onlyOwner() 
+    {
+        require(msg.sender == owner, "You are not allowed");
+        _;
+    }
+
     constructor() public
     {
         owner = msg.sender;
@@ -15,9 +21,8 @@ contract SharedWallet
 
     }
 
-    function Withdraw(address payable _to, uint _amount) public
+    function Withdraw(address payable _to, uint _amount) public onlyOwner
     {
-        require(msg.sender == owner, "You are not allowed");
         _to.transfer(_amount);
     } 
 }
